@@ -28,6 +28,44 @@ class App extends React.Component {
     console.log(event.props.changeHandler)
     this.setState({[event.props.changeHandler]: event.props.value})
   }
+
+  addTodo = (event) => {
+    event.preventDefault(); 
+  
+    const newTodoItem = { task: this.state.todo, completed: false, id: Date.now() }
+    this.setState({
+      todos: [...this.state.todos, newTodoItem],
+    todo: "",
+   })
+  }
+
+  toggleTodo = id => {
+    const todo = this.state.todo.map(todo => {
+      if (todo.id === id) {
+        const newTodo = {
+          ...todo,
+          completed: !todo.completed
+        };
+        return newTodo;
+      } else {
+        return todo;
+      }
+    })
+
+    this.setState({todo});
+  }
+
+  clearCompletedTodos = (event) => {
+    event.preventDefault();
+    const todos = this.state.todo.filter(todo => {
+      if (todo.completed === false) {
+        return true;
+      } else 
+        return false;
+    })
+
+    this.setState({todos});
+  }
   
   render() {
     return (
